@@ -29,29 +29,46 @@ const createComment = async (req, res) => {
 };
 
 // Get all comments
-const getAllComments= async (req, res) => {
+
+const getAllComments = async (req, res) => {
+    const page = parseInt(req.query.page) || 1; // Current page number, default to 1 if not provided
+    const limit = parseInt(req.query.limit) || 10; // Number of comments per page, default to 10 if not provided
+
     const postId = req.params.postId;
+
     try {
-        const comments = await Comment.find({ postId }).populate('authorId', 'name');;
+        const totalComments = await Comment.countDocuments({ postId });
+        const totalPages = Math.ceil(totalComments / limit);
+        const skip = (page - 1) * limit;
+
+        const comments = await Comment.find({ postId })
+                                      .populate('authorId', 'name')
+                                      .skip(skip)
+                                      .limit(limit);
+
         if (!comments || comments.length === 0) {
             return res.status(404).json({
                 status: 404,
-                message: 'No comments found for the specified author'
+                message: 'No comments found for the specified post'
             });
         }
+
         res.status(200).json({
             status: 200,
-            message: 'Retrieved posts comments successfully',
-            data: comments
+            message: 'Retrieved post comments successfully',
+            data: comments,
+            currentPage: page,
+            totalPages: totalPages
         });
     } catch (error) {
-        console.error('Error retrieving comments by author:', error);
+        console.error('Error retrieving comments by post:', error);
         res.status(500).json({
             status: 500,
             message: 'Internal server error'
         });
     }
 };
+
 
 // Get a single comment by ID
 const getCommentById = async (req, res) => {

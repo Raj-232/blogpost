@@ -77,7 +77,7 @@ You can start editing the page by modifying `index.js`. The page auto-updates as
 - **Method:** `GET`
 
 #### createPost
-- **URL:** `/api/v1/blogpost`
+- **URL:** `/api/v1/blogpost?page=1&limit=10`
 - **Method:** `POST`
 - **Request Body:**
   ```json
@@ -141,7 +141,7 @@ You can start editing the page by modifying `index.js`. The page auto-updates as
   }
 
 ### get all postcomment
-- **URL:** `/api/v1/post/postcomment/:postId`
+- **URL:** `/api/v1/post/postcomment/:postId?page=1&limit=10`
 - **Method:** `GET`
 
 ### get postcomment by id

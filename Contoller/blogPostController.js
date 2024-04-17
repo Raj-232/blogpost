@@ -59,27 +59,41 @@ const getAllPostsByAuthor = async (req, res) => {
 //get all posts
 
 const getAllPosts = async (req, res) => {
+    const page = parseInt(req.query.page) || 1; // Current page number, default to 1 if not provided
+    const limit = parseInt(req.query.limit) || 10; // Number of posts per page, default to 10 if not provided
+
     try {
-        const post = await Post.find();
-        if (!post) {
+        const totalPosts = await Post.countDocuments();
+        const totalPages = Math.ceil(totalPosts / limit);
+        const skip = (page - 1) * limit;
+
+        const posts = await Post.find()
+                                .skip(skip)
+                                .limit(limit);
+
+        if (!posts || posts.length === 0) {
             return res.status(404).json({
                 status: 404,
-                message: 'Post not found'
+                message: 'No posts found'
             });
         }
+
         res.status(200).json({
             status: 200,
-            message: 'Retrieved post successfully',
-            data: post
+            message: 'Retrieved posts successfully',
+            data: posts,
+            currentPage: page,
+            totalPages: totalPages
         });
     } catch (error) {
-        console.error('Error retrieving post:', error);
+        console.error('Error retrieving posts:', error);
         res.status(500).json({
             status: 500,
             message: 'Internal server error'
         });
     }
 };
+
 
 
 // Get a single post by ID
