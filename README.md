@@ -1,6 +1,8 @@
 ## Getting Started
 
-First, clone the repo [git@github.com:Raj-232/bookusshow.git](git@github.com:Raj-232/bookusshow.git)
+First, clone the repo [https://github.com/Raj-232/blogpost.git](https://github.com/Raj-232/blogpost.git)
+
+## require mongodb in your system
 
 install dependencies using
 ```bash
@@ -34,3 +36,114 @@ You can start editing the page by modifying `index.js`. The page auto-updates as
     "password": "password123"
   }
 
+#### Sign In
+- **URL:** `/api/v1/user/signin`
+- **Method:** `POST`
+- **Request Body:**
+  ```json
+  {
+    "email": "john@example.com",
+    "password": "password123"
+  }
+
+## Send the token to Header in all api call
+
+
+#### management
+
+#### get  user
+
+- **URL:** `/api/v1//user/:userid`
+- **Method:** `GET`
+
+#### update user
+- **URL:** `/api/v1//user/:userid`
+- **Method:** `PUT`
+- **Request Body:**
+  ```json
+  {
+    "email": "john@example.com",
+    "password": "password123"
+  }
+
+#### delete user
+- **URL:** `/api/v1//user/:userid`
+- **Method:** `DELETE`
+
+### BlogPost
+
+#### getall post
+- **URL:** `/api/v1/blogpost`
+- **Method:** `GET`
+
+#### createPost
+- **URL:** `/api/v1/blogpost`
+- **Method:** `POST`
+- **Request Body:**
+  ```json
+  {
+   "title": "Sample Post Title",
+  "content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+  "authorId": userid
+  }
+#### get ALL post by id
+- **URL:** `/user/blogpost/:authorId`
+- **Method:** `GET`
+
+#### get post by id
+- **URL:** `/blogpost/:postid`
+- **Method:** `GET`
+
+#### updatePost
+- **URL:** `/api/v1/blogpost/:postid`
+- **Method:** `PUT`
+- **Request Body:**
+  ```json
+  {
+   "title": "Sample Post Title",
+  "content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+  "authorId": userid
+  }
+  
+#### deletepost
+- **URL:** `/blogpost/:postid`
+- **Method:** `DELETE`
+
+### comments api
+
+### create postcomment
+- **URL:** `/api/v1/postcomment`
+- **Method:** `POST`
+- **Request Body:**
+  ```json
+  {
+  "content": "This is a sample comment.",
+  "postId": postid
+  "authorId": userid
+  }
+### update postcomment
+- **URL:** `/api/v1/postcomment/:commendId`
+- **Method:** `PUT`
+- **Request Body:**
+  ```json
+  {
+    "content":"gaminga industry was so coll ",
+    "authorId":userid
+  }
+
+### delete postcomment
+- **URL:** `/api/v1/postcomment/:commendId`
+- **Method:** `DELETE`
+- **Request Body:**
+  ```json
+  {
+    "authorId":userid
+  }
+
+### get all postcomment
+- **URL:** `/api/v1/post/postcomment/:postId`
+- **Method:** `GET`
+
+### get postcomment by id
+- **URL:** `/api/v1/postcomment/:postId`
+- **Method:** `GET`
